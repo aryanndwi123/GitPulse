@@ -79,13 +79,6 @@ gitpulse --email your.email@example.com
 
 Replace `your.email@example.com` with the email you use for Git commits.
 
-## How It Works
-
-1. When you run `--add`, the tool recursively scans the specified directory for Git repositories (folders containing a `.git` directory).
-2. It stores the paths to these repositories in a configuration file at `~/.gogitlocalstats`.
-3. When you run `--email`, it processes each stored repository, retrieving commits by the specified author from the last six months.
-4. It then generates a visual heatmap in your terminal showing your commit activity.
-
 ## Understanding the Visualization
 
 The visualization is a heatmap with:
@@ -115,15 +108,6 @@ The application stores repository paths in `~/.gogitlocalstats`. This is a simpl
 
 - `gopkg.in/src-d/go-git.v4`: Go Git implementation for retrieving commit history
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
@@ -133,14 +117,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Inspired by GitHub's contribution graph
 - Thanks to the go-git library for Git functionality
-
-## Troubleshooting
-
-### Common Issues
-
-1. **No repositories found**: Make sure you've added repositories with `--add` before trying to view stats.
-2. **No commits showing**: Verify that the email provided matches the one used in your Git commits.
-3. **Error reading repositories**: Check the permissions of the `~/.gogitlocalstats` file.
-4. **Command not found**: If you installed with `go install` but can't run the command, make sure your Go bin directory is in your PATH.
-
-If you encounter any bugs or have feature requests, please [open an issue](https://github.com/aryanndwi123/gitpulse/issues).
+- Special mention to [Flavio Copes](https://github.com/flaviocopes)
