@@ -6,7 +6,7 @@ A command-line tool to visualize your Git commit history from local repositories
 
 GitPulse scans your local Git repositories and creates a visual representation of your commit activity in the terminal. It displays a heatmap similar to GitHub's contribution graph, showing your commit frequency over the last six months.
 
-![Sample Output](https://i.imgur.com/placeholder.png)
+![Sample Output](https://i.ibb.co/B2R9Zm60/Screenshot-2025-03-16-at-6-22-22-PM.png)
 
 ## Features
 
