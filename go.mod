@@ -1,4 +1,4 @@
-module github_cli_contribgraph
+module github.com/aryanndwi123/GitPulse
 
 go 1.23.2
 
