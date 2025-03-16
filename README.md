@@ -29,7 +29,7 @@ The easiest way to install GitPulse is directly through Go:
 
 ```bash
 # Download and install the binary
-go install github.com/aryanndwi123/gitpulse@latest
+go install github.com/aryanndwi123/gitpulse
 
 # Make sure your Go bin directory is in your PATH
 # Add this to your ~/.bashrc, ~/.zshrc, or similar shell configuration file
