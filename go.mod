@@ -1,4 +1,4 @@
-module github.com/aryanndwi123/GitPulse
+module github.com/aryanndwi123/gitpulse
 
 go 1.23.2
 

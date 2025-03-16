@@ -1,10 +1,10 @@
-# Git Local Stats
+# GitPulse
 
 A command-line tool to visualize your Git commit history from local repositories, similar to GitHub's contribution graph.
 
 ## Overview
 
-Git Local Stats scans your local Git repositories and creates a visual representation of your commit activity in the terminal. It displays a heatmap similar to GitHub's contribution graph, showing your commit frequency over the last six months.
+GitPulse scans your local Git repositories and creates a visual representation of your commit activity in the terminal. It displays a heatmap similar to GitHub's contribution graph, showing your commit frequency over the last six months.
 
 ![Sample Output](https://i.imgur.com/placeholder.png)
 
@@ -23,21 +23,38 @@ Git Local Stats scans your local Git repositories and creates a visual represent
 - Go 1.13 or higher
 - Git installed on your system
 
+### Installing with Go
+
+The easiest way to install GitPulse is directly through Go:
+
+```bash
+# Download and install the binary
+go install github.com/aryanndwi123/gitpulse@latest
+
+# Make sure your Go bin directory is in your PATH
+# Add this to your ~/.bashrc, ~/.zshrc, or similar shell configuration file
+export PATH=$PATH:$(go env GOPATH)/bin
+
+# Reload your shell configuration
+source ~/.bashrc  # or source ~/.zshrc if using zsh
+```
+
+After installation, you can run GitPulse from anywhere using the `gitpulse` command.
+
 ### Building from source
+
+If you prefer to build from source:
 
 ```bash
 # Clone the repository
-git clone https://github.com/aryanndwi123/GitPulse.git
-cd GitPulse
+git clone https://github.com/aryanndwi123/gitpulse.git
+cd gitpulse
 
 # Build the application
-go build -o gitlocalstats .
-```
+go build -o gitpulse .
 
-Or install directly using Go:
-
-```bash
-go get github.com/aryanndwi123/GitPulse
+# Optionally, move the binary to a directory in your PATH
+sudo mv gitpulse /usr/local/bin/
 ```
 
 ## Usage
@@ -47,7 +64,7 @@ go get github.com/aryanndwi123/GitPulse
 First, add directories containing Git repositories to track:
 
 ```bash
-gitlocalstats --add /path/to/your/projects
+gitpulse --add /path/to/your/projects
 ```
 
 You can add multiple directories by running the command multiple times.
@@ -57,7 +74,7 @@ You can add multiple directories by running the command multiple times.
 To view your commit stats, run:
 
 ```bash
-gitlocalstats --email your.email@example.com
+gitpulse --email your.email@example.com
 ```
 
 Replace `your.email@example.com` with the email you use for Git commits.
@@ -124,5 +141,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 1. **No repositories found**: Make sure you've added repositories with `--add` before trying to view stats.
 2. **No commits showing**: Verify that the email provided matches the one used in your Git commits.
 3. **Error reading repositories**: Check the permissions of the `~/.gogitlocalstats` file.
+4. **Command not found**: If you installed with `go install` but can't run the command, make sure your Go bin directory is in your PATH.
 
-If you encounter any bugs or have feature requests, please [open an issue](https://github.com/aryanndwi123/GitPulse/issues).
+If you encounter any bugs or have feature requests, please [open an issue](https://github.com/aryanndwi123/gitpulse/issues).
