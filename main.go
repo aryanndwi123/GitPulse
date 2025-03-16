@@ -11,9 +11,9 @@ func main(){
 	flag.Parse()
 
 	if folder != "" {
-		scan(folder)
+		performRepositoryScan(folder)
 		return
 	}
 
-	stats(email)
+	calculateGitStats(email)
 }

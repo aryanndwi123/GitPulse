@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func getDotFilePath() string {
+func locateConfigFilePath() string {
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -22,7 +22,7 @@ func getDotFilePath() string {
 	return dotFile
 }
 
-func openFile(filePath string) *os.File {
+func initializeConfigFile(filePath string) *os.File {
 	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_RDWR, 0755)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -38,8 +38,8 @@ func openFile(filePath string) *os.File {
 	return f
 }
 
-func parseFileLinesToSlice(filePath string) []string {
-	f := openFile(filePath)
+func parseConfigFileLines(filePath string) []string {
+	f := initializeConfigFile(filePath)
 	defer f.Close()
 
 	var lines []string
@@ -56,7 +56,7 @@ func parseFileLinesToSlice(filePath string) []string {
 	return lines
 }
 
-func sliceContains(slice []string, value string) bool {
+func isSliceContainingValue(slice []string, value string) bool {
 	for _, v := range slice {
 		if v == value {
 			return true
@@ -65,39 +65,39 @@ func sliceContains(slice []string, value string) bool {
 	return false
 }
 
-func joinSlices(new []string, existing []string) []string {
+func mergeUniqueSlices(new []string, existing []string) []string {
 	for _, i := range new {
-		if !sliceContains(existing, i) {
+		if !isSliceContainingValue(existing, i) {
 			existing = append(existing, i)
 		}
 	}
 	return existing
 }
 
-func dumpStringsSliceToFile(repos []string, filePath string) {
+func writeSliceToConfigFile(repos []string, filePath string) {
 	content := strings.Join(repos, "\n")
 	ioutil.WriteFile(filePath, []byte(content), 0755)
 }
 
-func addNewSliceElementsToFile(filePath string, newRepos []string) {
-	existingRepos := parseFileLinesToSlice(filePath)
-	repos := joinSlices(newRepos, existingRepos)
-	dumpStringsSliceToFile(repos, filePath)
+func updateConfigFileWithNewRepos(filePath string, newRepos []string) {
+	existingRepos := parseConfigFileLines(filePath)
+	repos := mergeUniqueSlices(newRepos, existingRepos)
+	writeSliceToConfigFile(repos, filePath)
 }
 
-func recursiveScanFolder(folder string) []string {
-	return scanGitFolders(make([]string, 0), folder)
+func discoverGitRepositories(folder string) []string {
+	return findGitRepositoriesRecursively(make([]string, 0), folder)
 }
 
-func scan(folder string) {
+func performRepositoryScan(folder string) {
 	fmt.Printf("Found folders:\n\n")
-	repositories := recursiveScanFolder(folder)
-	filePath := getDotFilePath()
-	addNewSliceElementsToFile(filePath, repositories)
+	repositories := discoverGitRepositories(folder)
+	filePath := locateConfigFilePath()
+	updateConfigFileWithNewRepos(filePath, repositories)
 	fmt.Printf("\n\nSuccessfully added\n\n")
 }
 
-func scanGitFolders(folders []string, folder string) []string {
+func findGitRepositoriesRecursively(folders []string, folder string) []string {
 	folder = strings.TrimSuffix(folder, "/")
 
 	f, err := os.Open(folder)
@@ -124,7 +124,7 @@ func scanGitFolders(folders []string, folder string) []string {
 			if file.Name() == "vendor" || file.Name() == "node_modules" {
 				continue
 			}
-			folders = scanGitFolders(folders, path)
+			folders = findGitRepositoriesRecursively(folders, path)
 		}
 	}
 
